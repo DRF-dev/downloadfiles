@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { readFileSync, writeFileSync } from 'fs'
 import { join } from 'path'
 
 const download = (req: Request, res: Response) => {
@@ -6,8 +7,10 @@ const download = (req: Request, res: Response) => {
 }
 
 const upload = (req: Request, res: Response) => {
-  console.log(req.file.filename)
-  res.redirect('/')
+  const a = readFileSync(req.file.path)
+  const path = join(__dirname, "../../img/newImg.jpg")
+  writeFileSync(path, a)
+  res.download(path)
 }
 
 export { download, upload }
